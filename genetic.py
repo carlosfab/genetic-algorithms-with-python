@@ -14,28 +14,6 @@ class Chromossome(object):
         self.Fitness = fitness
 
 
-class Benchmark(object):
-    @staticmethod
-    def run(function):
-        timings = []
-        stdout = sys.stdout
-        for i in range(100):
-            stdout = None
-            startTime = time.time()
-            function()
-            seconds = time.time() - startTime
-            sys.stdout = stdout
-            timings.append(seconds)
-            mean = statistics.mean(timings)
-
-            if i < 10 or i % 10 == 9:
-                print("{0} {1:3.2f} {2:3.2f}".format(
-                    1 + i, mean,
-                    statistics.stdev(timings, mean)
-                    if i > 1 else 0
-                ))
-
-
 def _generate_parent(length, geneSet, get_fitness):
     genes = np.random.choice(geneSet, length)
     genes = ''.join(genes)
