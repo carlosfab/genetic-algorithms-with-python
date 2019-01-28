@@ -1,7 +1,6 @@
 # import the necessary packages
 import string
 import datetime
-import numpy as np
 import unittest
 
 import genetic
