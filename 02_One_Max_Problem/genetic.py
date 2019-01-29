@@ -1,8 +1,5 @@
 # import the necessary packages
 import numpy as np
-import time
-import statistics
-import sys
 
 
 class Chromossome(object):
@@ -22,9 +19,10 @@ def _generate_parent(length, geneSet, get_fitness):
 
 def _mutate(parent, geneSet, get_fitness):
     idx = np.random.randint(0, len(parent.Genes))
-    childGenes = parent.Genes[:]
-    newGene = np.random.choice(geneSet, 1)[0]
-    childGenes[idx] = newGene
+
+    childGenes = parent.Genes.copy()
+    childGenes[idx] = 1 - childGenes[idx]
+
     fitness = get_fitness(childGenes)
 
     return Chromossome(childGenes, fitness)
@@ -33,7 +31,7 @@ def _mutate(parent, geneSet, get_fitness):
 def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
     np.random.seed()
     bestParent = _generate_parent(targetLen, geneSet, get_fitness)
-    # display(bestParent)
+    display(bestParent)
 
     if bestParent.Fitness >= optimalFitness:
         return bestParent
@@ -46,7 +44,7 @@ def get_best(get_fitness, targetLen, optimalFitness, geneSet, display):
 
         bestParent = child
 
-        # display(bestParent)
+        display(bestParent)
 
         if bestParent.Fitness >= optimalFitness:
             return bestParent
